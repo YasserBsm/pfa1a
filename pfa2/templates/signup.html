@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - Gestionnaire de Portefeuille</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            color: #2c3e50;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, rgba(52, 152, 219, 0) 70%);
+            z-index: -1;
+        }
+        
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(46, 204, 113, 0.1) 0%, rgba(46, 204, 113, 0) 70%);
+            z-index: -1;
+        }
+        
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.5px;
+            transition: transform 0.3s ease;
+        }
+        
+        .navbar-brand:hover {
+            transform: translateY(-2px);
+            color: #3498db;
+        }
+        
+        .logo-circle {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            border-radius: 50%;
+            margin-right: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 3px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .logo-circle::after {
+            content: '';
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            width: 40%;
+            height: 40%;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 10px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+        
+        .login-btn {
+            color: #2c3e50;
+            border: 1px solid #e0e6ed;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+        }
+        
+        .login-btn:hover {
+            background-color: #f8f9fa;
+            color: #3498db;
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .signup-btn {
+            color: white;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border: none;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .signup-btn:hover {
+            background: linear-gradient(135deg, #2980b9 0%, #2c3e50 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .signup-container {
+            max-width: 1000px;
+            margin: 60px auto;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            padding: 0;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        .signup-form-container {
+            flex: 1;
+            padding: 40px;
+        }
+        
+        .signup-image {
+            flex: 1;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .signup-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+        }
+        
+        .signup-image-content {
+            color: white;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .signup-image-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .signup-image-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .signup-image-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 80%;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        
+        .signup-header {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+        
+        .signup-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .signup-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 2px;
+        }
+        
+        .signup-subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            max-width: 90%;
+        }
+        
+        .form-group {
+            margin-bottom: 28px;
+            position: relative;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+        
+        .form-icon {
+            position: absolute;
+            left: 15px;
+            top: 69%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 20px 14px 45px;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+        }
+        
+        .form-control:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+            background-color: white;
+        }
+        
+        .form-control:focus + .form-icon {
+            color: #3498db;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 69%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .password-toggle:hover {
+            color: #3498db;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #2980b9 0%, #2c3e50 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .submit-btn:hover::after {
+            opacity: 1;
+        }
+        
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .terms-text {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .terms-text a {
+            color: #4A45E5;
+            text-decoration: none;
+        }
+        
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.95rem;
+        }
+        
+        .login-link a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding-bottom: 2px;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .login-link a:hover {
+            color: #2980b9;
+            border-bottom: 1px solid #2980b9;
+        }
+        
+        .benefits {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px solid #f0f4f7;
+        }
+        
+        .benefits-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .benefits-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 2px;
+        }
+        
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .benefits-list li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 20px;
+            color: #5d6d7e;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+        
+        .benefits-list li:hover {
+            transform: translateX(5px);
+            color: #2c3e50;
+        }
+        
+        .benefits-list li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .benefits-list li:hover:before {
+            background-color: rgba(52, 152, 219, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .benefits-list li:after {
+            content: "\f00c";
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 5px;
+            top: 2px;
+            color: #3498db;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .benefits-list li:hover:after {
+            color: #2980b9;
+            transform: scale(1.2);
+        }
+        
+        .flash-message {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(46, 204, 113, 0.9);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideDown 0.5s ease forwards;
+        }
+        
+        .flash-message.error {
+            background-color: rgba(231, 76, 60, 0.9);
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+        
+        .flash-message::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+        }
+        
+        .flash-message.error::before {
+            content: '\f071';
+        }
+        
+        @keyframes slideDown {
+            0% {
+                transform: translate(-50%, -20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .signup-container {
+                flex-direction: column;
+                max-width: 500px;
+            }
+            
+            .signup-image {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .signup-container {
+                margin: 40px 15px;
+                border-radius: 12px;
+            }
+            
+            .signup-form-container {
+                padding: 25px;
+            }
+            
+            .signup-title {
+                font-size: 1.8rem;
+            }
+            
+            .form-control {
+                padding: 12px 15px 12px 40px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .signup-header, .form-group, .submit-btn, .login-link, .benefits {
+            animation: fadeIn 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        .signup-header { animation-delay: 0.1s; }
+        .form-group:nth-child(1) { animation-delay: 0.2s; }
+        .form-group:nth-child(2) { animation-delay: 0.3s; }
+        .form-group:nth-child(3) { animation-delay: 0.4s; }
+        .submit-btn { animation-delay: 0.5s; }
+        .login-link { animation-delay: 0.6s; }
+        .benefits { animation-delay: 0.7s; }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <div class="logo-circle"></div>
+                PortfolioManager
+            </a>
+            <div class="auth-buttons">
+                <a href="/login" class="button login-btn">Se connecter</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {% if category == 'error' or category == 'danger' %}error{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+
+    <!-- Signup Form -->
+    <div class="container">
+        <div class="signup-container">
+            <div class="signup-form-container">
+                <div class="signup-header">
+                    <h1 class="signup-title">Créez votre compte</h1>
+                    <p class="signup-subtitle">Rejoignez des milliers d'investisseurs qui gèrent efficacement leurs portefeuilles</p>
+                </div>
+
+                <form action="/signup" method="POST">
+                    <div class="form-group">
+                        <label for="username" class="form-label">Nom d'utilisateur</label>
+                        <input type="text" id="username" name="username" class="form-control" required>
+                        <i class="fas fa-user form-icon"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Mot de passe</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                        <i class="fas fa-lock form-icon"></i>
+                        <i class="fas fa-eye password-toggle" id="password-toggle"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password" class="form-label">Confirmer le mot de passe</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                        <i class="fas fa-lock form-icon"></i>
+                        <i class="fas fa-eye password-toggle" id="confirm-password-toggle"></i>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Créer mon compte</button>
+                    
+                    <div class="login-link">
+                        Vous avez déjà un compte ? <a href="/login">Se connecter</a>
+                    </div>
+                    
+                    <div class="benefits">
+                        <h2 class="benefits-title">Avantages de PortfolioManager</h2>
+                        <ul class="benefits-list">
+                            <li>Suivi de tous vos investissements en un seul endroit</li>
+                            <li>Analyse détaillée des performances de votre portefeuille</li>
+                            <li>Gestion simplifiée des dividendes</li>
+                            <li>Aide pour vos déclarations fiscales</li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="signup-image">
+                <div class="signup-image-content">
+                    <i class="fas fa-chart-line signup-image-icon"></i>
+                    <h2 class="signup-image-title">Gérez vos investissements</h2>
+                    <p class="signup-image-text">Notre plateforme vous offre tous les outils nécessaires pour suivre et optimiser votre portefeuille d'investissements.</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-dismiss flash messages after 5 seconds
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(message => {
+                setTimeout(() => {
+                    message.style.opacity = '0';
+                    message.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => {
+                        message.remove();
+                    }, 500);
+                }, 5000);
+            });
+            
+            // Password confirmation validation
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirm_password');
+            
+            function validatePassword() {
+                if (password.value !== confirmPassword.value) {
+                    confirmPassword.setCustomValidity("Les mots de passe ne correspondent pas");
+                } else {
+                    confirmPassword.setCustomValidity('');
+                }
+            }
+            
+            password.onchange = validatePassword;
+            confirmPassword.onkeyup = validatePassword;
+            
+            // Password toggle functionality
+            const passwordToggle = document.getElementById('password-toggle');
+            const confirmPasswordToggle = document.getElementById('confirm-password-toggle');
+            
+            passwordToggle.addEventListener('click', function() {
+                togglePasswordVisibility(password, passwordToggle);
+            });
+            
+            confirmPasswordToggle.addEventListener('click', function() {
+                togglePasswordVisibility(confirmPassword, confirmPasswordToggle);
+            });
+            
+            function togglePasswordVisibility(inputField, toggleIcon) {
+                if (inputField.type === 'password') {
+                    inputField.type = 'text';
+                    toggleIcon.classList.remove('fa-eye');
+                    toggleIcon.classList.add('fa-eye-slash');
+                } else {
+                    inputField.type = 'password';
+                    toggleIcon.classList.remove('fa-eye-slash');
+                    toggleIcon.classList.add('fa-eye');
+                }
+            }
+            
+            // Add animation to submit button
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            submitBtn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+            
+            // Form field focus effects
+            const formControls = document.querySelectorAll('.form-control');
+            formControls.forEach(control => {
+                const formIcon = control.parentElement.querySelector('.form-icon');
+                if (formIcon) {
+                    control.addEventListener('focus', function() {
+                        formIcon.style.color = '#3498db';
+                    });
+                    
+                    control.addEventListener('blur', function() {
+                        if (!this.value) {
+                            formIcon.style.color = '#95a5a6';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
